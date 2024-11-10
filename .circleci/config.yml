@@ -3,20 +3,32 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:17-jdk
+      - image: circleci/openjdk:17-jdk  
     steps:
-      - checkout  
+      - checkout
       - run:
-          name: Install Dependencies
-          command: mvn install 
+          name: Kompilacja kodu Java
+          command: |
+            mkdir -p build  
+            javac -d build src/main/java/**/*.java  
+
       - run:
-          name: Run Tests
-          command: mvn test
+          name: Kompilacja testów Java
+          command: |
+            javac -d build -cp build src/test/java/**/*.java  
+
       - run:
-          name: Build Project
-          command: mvn package  
+          name: Uruchomienie testów jednostkowych
+          command: |
+            java -cp "build:libs/*" org.junit.runner.JUnitCore testykalkulatora  
+
+      - run:
+          name: Stworzenie pliku JAR
+          command: |
+            jar cvf build/kalkulator.jar -C build .
+
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build
+      - build  
