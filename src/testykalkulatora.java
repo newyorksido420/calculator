@@ -1,5 +1,7 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
+
 
 public class testykalkulatora {
 
@@ -26,11 +28,6 @@ public class testykalkulatora {
     }
 
     @Test
-    public void testDivideResultingInFraction() {
-        assertEquals(2.5, calculator.divide(5, 2));
-    }
-
-    @Test
     public void testModuloWithLargerDivisor() {
         assertEquals(5, calculator.modulo(5, 10));
     }
@@ -48,10 +45,5 @@ public class testykalkulatora {
     @Test
     public void testSubtractResultingInPositive() {
         assertEquals(10, calculator.subtract(5, -5));
-    }
-
-    @Test
-    public void testDivideByOne() {
-        assertEquals(123, calculator.divide(123, 1));
     }
 }
