@@ -54,4 +54,8 @@ public class testykalkulatora {
     public void testDivideByOne() {
         assertEquals(123, calculator.divide(123, 1));
     }
+    @Test
+    public void testDivideByZero() {
+        assertEquals(123, calculator.divide(123, 0));
+    }
 }
