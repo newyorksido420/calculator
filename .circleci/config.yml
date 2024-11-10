@@ -5,27 +5,31 @@ jobs:
     docker:
       - image: circleci/openjdk:17-jdk  
     steps:
-      - checkout
+      - checkout  
+
+      
       - run:
           name: Kompilacja kodu Java
           command: |
             mkdir -p build  
             javac -d build src/main/java/**/*.java  
-
+      # Krok 2: Kompilacja testów
       - run:
           name: Kompilacja testów Java
           command: |
             javac -d build -cp build src/test/java/**/*.java  
 
+      # Krok 3: Uruchomienie testów jednostkowych
       - run:
-          name: Uruchomienie testów jednostkowych
+          name: Uruchamianie testów JUnit
           command: |
-            java -cp "build:libs/*" org.junit.runner.JUnitCore testykalkulatora  
+            java -cp "build:libs/*" org.junit.platform.console.ConsoleLauncher --scan-classpath  
 
+      # Krok 4: Tworzenie pliku JAR
       - run:
-          name: Stworzenie pliku JAR
+          name: Tworzenie pliku JAR
           command: |
-            jar cvf build/kalkulator.jar -C build .
+            jar cvf build/kalkulator.jar -C build .  
 
 workflows:
   version: 2
