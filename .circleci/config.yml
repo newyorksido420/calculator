@@ -3,36 +3,37 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/openjdk:17-jdk  
+      - image: openjdk:17  # Zmiana na oficjalny obraz OpenJDK 17
     steps:
-      - checkout  
+      - checkout  # Pobieramy kod z repozytorium
 
-      
+      # Krok 1: Kompilacja głównych plików źródłowych
       - run:
           name: Kompilacja kodu Java
           command: |
-            mkdir -p build  
-            javac -d build src/main/java/**/*.java  
+            mkdir -p build  # Tworzymy katalog na skompilowane pliki
+            javac -d build src/main/java/**/*.java  # Kompilujemy kod główny (klasy kalkulatora)
+
       # Krok 2: Kompilacja testów
       - run:
           name: Kompilacja testów Java
           command: |
-            javac -d build -cp build src/test/java/**/*.java  
+            javac -d build -cp build src/test/java/**/*.java  # Kompilujemy testy jednostkowe
 
       # Krok 3: Uruchomienie testów jednostkowych
       - run:
           name: Uruchamianie testów JUnit
           command: |
-            java -cp "build:libs/*" org.junit.platform.console.ConsoleLauncher --scan-classpath  
+            java -cp "build:libs/*" org.junit.platform.console.ConsoleLauncher --scan-classpath  # Uruchamiamy testy za pomocą JUnit Platform
 
       # Krok 4: Tworzenie pliku JAR
       - run:
           name: Tworzenie pliku JAR
           command: |
-            jar cvf build/kalkulator.jar -C build .  
+            jar cvf build/kalkulator.jar -C build .  # Tworzymy plik JAR z kompilowanych plików
 
 workflows:
   version: 2
   build_and_test:
     jobs:
-      - build  
+      - build  # Uruchamiamy jedno zadanie "build"
