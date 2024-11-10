@@ -12,13 +12,13 @@ jobs:
           name: Kompilacja kodu Java
           command: |
             mkdir -p build  # Tworzymy katalog na skompilowane pliki
-            javac -d build src/main/java/**/*.java  # Kompilujemy kod główny (klasy kalkulatora)
+            javac -d build src/main/kalkulator.java  # Kompilujemy kod główny (klasy kalkulatora)
 
       # Krok 2: Kompilacja testów
       - run:
           name: Kompilacja testów Java
           command: |
-            javac -d build -cp build src/test/java/**/*.java  # Kompilujemy testy jednostkowe
+            javac -d build -cp build src/testykalkulatora.java  # Kompilujemy testy jednostkowe
 
       # Krok 3: Uruchomienie testów jednostkowych
       - run:
